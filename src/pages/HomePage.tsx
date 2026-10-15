@@ -1,18 +1,11 @@
-import {
-  ArrowRight,
-  Bookmark,
-  Calendar,
-  Compass,
-  MapPin,
-  Sparkles,
-} from 'lucide-react'
+import { ArrowRight, Calendar, Compass, Sparkles } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { destinationCopy, places } from '../data/places'
+import { PlaceCard } from '../components/PlaceCard'
 import { PlaceDetails } from '../components/PlaceDetails'
-import { CATEGORY_LABELS, DESTINATIONS, type Destination, type Place } from '../types'
-import { useApp } from '../context/AppContext'
+import { DESTINATIONS, type Destination, type Place } from '../types'
 
 const sampleDays: Record<Destination, { title: string; subtitle: string; stops: Array<{ time: string; placeId: string; note: string }> }> = {
   Kyoto: {
@@ -52,7 +45,6 @@ const sampleDays: Record<Destination, { title: string; subtitle: string; stops: 
 
 export function HomePage() {
   const navigate = useNavigate()
-  const { isBookmarked, toggleBookmark } = useApp()
   const [activeCityTab, setActiveCityTab] = useState<Destination>('Kyoto')
   const [inspectedPlace, setInspectedPlace] = useState<Place | null>(null)
 
@@ -347,62 +339,14 @@ export function HomePage() {
           </div>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {curatedShowcase.map((place) => {
-              const saved = isBookmarked(place.id)
-              return (
-                <div
-                  key={place.id}
-                  onClick={() => setInspectedPlace(place)}
-                  className="group relative cursor-pointer overflow-hidden rounded-sm border border-line bg-panel transition hover:border-moss/40 hover:shadow-xl"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-charcoal">
-                    <img
-                      src={place.imageUrl}
-                      alt={place.imageAlt}
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent opacity-60" />
-                    <span className="absolute left-3 top-3 rounded-sm bg-ink/85 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.16em] text-ivory backdrop-blur-sm">
-                      {CATEGORY_LABELS[place.category]}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        toggleBookmark(place.id)
-                      }}
-                      className="absolute right-3 top-3 rounded-full bg-ink/80 p-2 text-ivory backdrop-blur-sm transition hover:scale-110"
-                      aria-label={saved ? 'Remove bookmark' : 'Bookmark place'}
-                    >
-                      <Bookmark size={13} fill={saved ? '#8b9a6a' : 'none'} className={saved ? 'text-moss' : ''} />
-                    </button>
-                  </div>
-
-                  <div className="p-5">
-                    <div className="flex items-baseline justify-between">
-                      <h4 className="font-display text-2xl text-ivory transition group-hover:text-moss">
-                        {place.name}
-                      </h4>
-                    </div>
-                    <p className="mt-1 flex items-center gap-1.5 text-xs text-stone">
-                      <MapPin size={12} className="text-moss" />
-                      {place.neighborhood}, {place.destination}
-                    </p>
-                    <p className="mt-2.5 line-clamp-2 text-xs leading-relaxed text-stone/80">
-                      {place.description}
-                    </p>
-                    <div className="mt-4 flex items-center justify-between border-t border-line/60 pt-3 text-xs">
-                      <span className="text-moss font-medium">
-                        {place.estimatedCost === 0 ? 'Free' : `~$${place.estimatedCost} / person`}
-                      </span>
-                      <span className="text-stone-muted text-[11px]">
-                        Quiet {place.quietness}/10
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
+            {curatedShowcase.map((place, idx) => (
+              <PlaceCard
+                key={place.id}
+                place={place}
+                onOpen={setInspectedPlace}
+                aspectRatio={idx % 2 === 0 ? 'tall' : 'standard'}
+              />
+            ))}
           </div>
         </div>
       </section>

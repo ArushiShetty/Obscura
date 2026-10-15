@@ -123,8 +123,13 @@ export function SavedPlacesPage() {
         </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((place) => (
-            <PlaceCard key={place.id} place={place} onOpen={setSelected} />
+          {filtered.map((place, idx) => (
+            <PlaceCard
+              key={place.id}
+              place={place}
+              onOpen={setSelected}
+              aspectRatio={idx % 3 === 0 ? 'tall' : idx % 3 === 1 ? 'standard' : 'cinematic'}
+            />
           ))}
         </div>
       )}

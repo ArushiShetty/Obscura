@@ -325,8 +325,13 @@ export function DiscoverPage() {
         </div>
       ) : (
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {results.map((place) => (
-            <PlaceCard key={place.id} place={place} onOpen={setSelected} />
+          {results.map((place, idx) => (
+            <PlaceCard
+              key={place.id}
+              place={place}
+              onOpen={setSelected}
+              aspectRatio={idx % 3 === 0 ? 'tall' : idx % 3 === 1 ? 'standard' : 'cinematic'}
+            />
           ))}
         </div>
       )}

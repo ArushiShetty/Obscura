@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { AmbientCanvas } from './AmbientCanvas'
 import { Footer } from './Footer'
 import { Navbar } from './Navbar'
 
@@ -13,22 +14,26 @@ export function Layout() {
   }, [location.pathname])
 
   return (
-    <div className="flex min-h-screen flex-col bg-ink text-ivory">
-      <Navbar />
-      <main className="flex-1 overflow-x-hidden">
-        <AnimatePresence mode="wait">
+    <div className="relative flex min-h-screen flex-col bg-ink text-ivory">
+      {/* Interactive mouse & wind/sea ambient canvas */}
+      <AmbientCanvas />
+
+      {/* Foreground content */}
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <Navbar />
+        <main className="flex-1 overflow-x-hidden">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1"
           >
             <Outlet />
           </motion.div>
-        </AnimatePresence>
-      </main>
-      <Footer />
+        </main>
+        <Footer />
+      </div>
     </div>
   )
 }

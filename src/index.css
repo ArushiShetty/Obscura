@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #0e0f0c;
+  --color-charcoal: #141512;
+  --color-panel: #1b1c17;
+  --color-panel-card: #20221c;
+  --color-ivory: #f3efe4;
+  --color-stone: #b8b2a4;
+  --color-stone-muted: #7f7a70;
+  --color-moss: #8b9a6a;
+  --color-olive: #6e7d4e;
+  --color-line: rgba(243, 239, 228, 0.12);
+  --color-line-strong: rgba(243, 239, 228, 0.22);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-ink);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-moss) 40%, transparent);
+  color: var(--color-ivory);
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #0e0f0c;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b2c26;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #44483c;
+}
+
+/* Leaflet Dark Editorial Styling */
+.leaflet-container {
+  background: #141512 !important;
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1b1c17 !important;
+  color: #f3efe4 !important;
+  border: 1px solid rgba(243, 239, 228, 0.18) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-tip {
+  background: #1b1c17 !important;
+  border: 1px solid rgba(243, 239, 228, 0.18) !important;
+}
+
+.leaflet-popup-content {
+  margin: 8px 12px !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(14, 15, 12, 0.85) !important;
+  color: #b8b2a4 !important;
+  font-size: 10px !important;
+  border-top-left-radius: 4px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #8b9a6a !important;
+  text-decoration: none !important;
+}
+
+.leaflet-control-zoom a {
+  background: #1b1c17 !important;
+  color: #f3efe4 !important;
+  border-color: rgba(243, 239, 228, 0.15) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #252820 !important;
+  color: #8b9a6a !important;
+}
+
+/* Custom Marker Styling */
+.obscura-marker-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: #8b9a6a;
+  color: #0e0f0c;
+  font-weight: 600;
+  font-size: 12px;
+  border: 2px solid #f3efe4;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.obscura-marker-pin:hover {
+  transform: scale(1.15);
+  background: #a2b37e;
+}
+
+/* Print Stylesheet for High-End Itinerary PDF Export */
+@media print {
+  @page {
+    margin: 1.2cm;
+    size: A4 portrait;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    font-size: 11pt;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-surface {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    border-color: #d1d5db !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+
+  .print-header {
+    border-bottom: 2px solid #1a1a1a !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .print-title {
+    color: #000000 !important;
+    font-size: 26pt !important;
+  }
+
+  .print-accent {
+    color: #4b553e !important;
+    font-weight: 600;
+  }
+
+  .print-card {
+    border: 1px solid #e5e7eb !important;
+    background: #f9fafb !important;
+    color: #111827 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 10px !important;
+  }
+
+  .print-budget {
+    border: 1px solid #111827 !important;
+    background: #f3f4f6 !important;
+    color: #111827 !important;
+    padding: 16px !important;
+    break-inside: avoid;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
